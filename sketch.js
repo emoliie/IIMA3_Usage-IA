@@ -24,7 +24,10 @@ function binFor(label){
   if(/(cardboard|carton)/.test(s)) return 'jaune';
   if(/(paper|papier)/.test(s)) return 'jaune';
   if(/(organic|aliment|food|compost|biolog|epluch|marron|vegetation|végét|veget|plant|jardin|garden|green ?waste)/.test(s)) return 'marron';
-  if(/(trash|déchet|dechet|ordure|résidu|residu|autre|general|général|miscellaneous|misc|divers)/.test(s)) return 'residuel';
+  // le modele n'a pas de classe "Rien" : la classe fourre-tout "Miscellaneous" capte le fond et les personnes
+  // -> on l'affiche comme "rien a trier" au lieu d'un faux BAC VERT
+  if(/(miscellaneous|misc|divers)/.test(s)) return 'rien';
+  if(/(trash|déchet|dechet|ordure|résidu|residu|autre|general|général)/.test(s)) return 'residuel';
   return 'unknown';
 }
 

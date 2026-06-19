@@ -54,9 +54,9 @@ Défini dans `binFor()` (sketch.js). Reconnaît les libellés FR et EN.
 | PLASTIC · PAPER · CARDBOARD · METAL | 🟡 **YELLOW BIN** (emballages) |
 | GLASS | ⚪ **WHITE BIN** (verre) |
 | ORGANIC · VEGETATION | 🟤 **BROWN BIN** (alimentaire) |
-| MISCELLANEOUS | 🟢 **GREEN BIN** (non-recyclable) |
 | TEXTILE | 🟣 **TEXTILE BANK** (borne à textiles) |
-| Rien / fond | — **NOTHING** |
+| MISCELLANEOUS · fond / personne | — **NOTHING** (voir *Limites connues*) |
+| _trash / ordures_ (libellé générique) | 🟢 **GREEN BIN** (non-recyclable) |
 
 ➡️ **Une classe affiche `???`** ? Elle n'est pas reconnue : ajoute son mot-clé dans la regex correspondante de `binFor()`.
 
@@ -74,6 +74,19 @@ Défini dans `binFor()` (sketch.js). Reconnaît les libellés FR et EN.
 ## RGPD
 
 Tout tourne **en local dans le navigateur** : la webcam et la classification ne quittent jamais la machine, aucune image n'est transmise à un serveur.
+
+---
+
+## Limites connues
+
+- **Pas de classe « Rien » dans le modèle.** Le dataset (type RealWaste) ne contient aucune classe « rien à trier ». Faute de mieux, le modèle range le **fond et les personnes** dans sa classe fourre-tout **MISCELLANEOUS**, souvent avec une confiance élevée.
+  - *Contournement côté interface* : dans `binFor()`, MISCELLANEOUS est traité comme **NOTHING** (« rien à trier ») au lieu d'afficher un faux bac vert. Mieux vaut ne rien afficher qu'afficher n'importe quoi en continu.
+  - *Conséquence* : un vrai déchet non-recyclable classé MISCELLANEOUS n'affiche pas non plus le bac vert.
+  - *Vraie correction* : ajouter une classe `Nothing` (captures de fonds / mains / visage) et **réentraîner** le modèle.
+- **Précision dépendante des données**, pas du framework : confusions entre matières visuellement proches (plastique/verre, papier/carton).
+- **Simplifications de tri** : TEXTILE et VEGETATION mappés de façon pragmatique, pas selon toutes les règles parisiennes réelles.
+- **Dépendance internet** pour charger les librairies (CDN) et le modèle (serveurs Google) — l'app ne fonctionne pas hors-ligne.
+- **Miroir purement visuel** : la prédiction en direct se fait sur l'image non-miroir.
 
 ---
 
