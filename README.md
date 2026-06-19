@@ -17,7 +17,7 @@ python3 -m http.server 8000
 npx serve
 ```
 
-Puis ouvrir **http://127.0.0.1:8000/tri-arcade.html**
+Puis ouvrir **http://127.0.0.1:8000/**
 
 Au chargement, le statut doit passer à **MODEL OK** (en haut à droite).
 
@@ -38,7 +38,7 @@ La webcam est affichée **en miroir**. Le verdict indique **dans quelle poubelle
 ## Structure
 
 ```
-tri-arcade.html   # page + chargement des libs (p5, tfjs, teachablemachine)
+index.html        # page + chargement des libs (p5, tfjs, teachablemachine)
 style.css         # styles arcade (Press Start 2P + VT323, boutons, ⚙ réglages)
 sketch.js         # logique p5 : canvas, webcam, prédiction, mapping bacs, UI
 ```
